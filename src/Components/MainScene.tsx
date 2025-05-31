@@ -1,27 +1,38 @@
 import { Canvas } from "@react-three/fiber";
 import { Models } from "./Models";
-import { Environment, Lightformer } from "@react-three/drei";
+import {
+  AsciiRenderer,
+  Environment,
+  Lightformer,
+  OrbitControls,
+} from "@react-three/drei";
 import Texts from "./Texts";
+import { EffectComposer } from "@react-three/postprocessing";
 
 const MainScene = () => {
   return (
     <div className="w-screen h-screen">
       <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
-        <color attach="background" args={["#000"]} />
         <Models />
         <Texts />
         <Environment preset="night">
           <Lightformer
-            intensity={8}
-            position={[10, 5, 0]}
+            intensity={3}
+            position={[1, 6, 3.6]}
             scale={[10, 50, 1]}
+            rotation={[Math.PI / 2, 0, 0]}
+            // scale={[10, 10, 0]}
             onUpdate={(self) => self.lookAt(0, 0, 0)}
           />
         </Environment>
+        <AsciiRenderer
+          invert={false}
+          resolution={0.1}
+          fgColor="white"
+          bgColor="transparent"
+        />
+        {/* <OrbitControls /> */}
         {/* <EffectComposer>
-          <N8AO aoRadius={1} intensity={2} />
-          <Bloom mipmapBlur luminanceThreshold={0.8} intensity={2} levels={8} />
-          <TiltShift2 blur={0.2} />
         </EffectComposer> */}
       </Canvas>
     </div>

@@ -1,12 +1,14 @@
 import { MeshTransmissionMaterial, useGLTF, Edges } from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
+import { useRef } from "react";
 
 export const Models = () => {
-  const { nodes } = useGLTF("./model/logo.glb");
+  const { nodes } = useGLTF("./model/logo2.glb");
 
-  const { viewport, camera, mouse } = useThree(); // ビューポートの幅を取得
-  const leftEdge = -viewport.width / 3;
+  const { camera, mouse } = useThree(); // ビューポートの幅を取得
+
+  const ref = useRef<THREE.Mesh>(null!);
   // useFrameでカメラ位置をマウスに合わせて動かす
   useFrame(() => {
     // mouse.x, mouse.yは-1〜1の範囲
@@ -26,23 +28,23 @@ export const Models = () => {
         geometry={(nodes.mesh as THREE.Mesh).geometry}
         rotation={[2, 0.3, 0.25]}
         position={[-1.5, -1.2, 0]}
+        ref={ref}
       >
         <MeshTransmissionMaterial
-          roughness={0.125}
+          roughness={0.25}
           backside
-          backsideThickness={5}
-          thickness={5}
+          backsideThickness={1}
+          thickness={0.1}
+          distortion={0.5}
+          temporalDistortion={0.03}
         />
-        {/* <Edges
-          linewidth={1}
-          scale={1}
-          threshold={15} 
-          color="white"
-        /> */}
+        <Edges linewidth={1} scale={1} threshold={10} color="white" />
+        {/* <meshStandardMaterial wireframe /> */}
       </mesh>
 
-      <pointLight position={[1, 1, -1]} intensity={30} color={"white"} />
-      <directionalLight position={[0, 0, -1]} color="gray" intensity={10} />
+      <pointLight position={[-1, 0, 0]} intensity={100} color={"white"} />
+      <pointLight position={[1, 0, 0]} intensity={100} color={"white"} />
+      <directionalLight position={[0, 0, -1]} color="white" intensity={10} />
     </>
   );
 };
