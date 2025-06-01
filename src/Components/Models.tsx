@@ -2,12 +2,13 @@ import { MeshTransmissionMaterial, useGLTF, Edges } from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
+import { LayerMaterial, Depth, Fresnel } from "lamina";
 
 export const Models = () => {
   const { nodes } = useGLTF("./model/logo2.glb");
 
   const { camera, mouse } = useThree(); // ビューポートの幅を取得
-
+  const gradient = 0.5; // グラデーションの強さを調整する値
   const ref = useRef<THREE.Mesh>(null!);
   // useFrameでカメラ位置をマウスに合わせて動かす
   useFrame(() => {
@@ -30,16 +31,62 @@ export const Models = () => {
         position={[-1.5, -1.2, 0]}
         ref={ref}
       >
-        <MeshTransmissionMaterial
+        {/* <MeshTransmissionMaterial
           roughness={0.25}
           backside
           backsideThickness={1}
           thickness={0.1}
           distortion={0.5}
           temporalDistortion={0.03}
-        />
-        <Edges linewidth={1} scale={1} threshold={10} color="white" />
-        {/* <meshStandardMaterial wireframe /> */}
+        /> */}
+        {/* <Edges linewidth={1} scale={1} threshold={10} color="white" /> */}
+        <meshStandardMaterial wireframe />
+
+        {/* <LayerMaterial toneMapped={false}>
+          <Depth
+            colorA="#ff0080"
+            colorB="black"
+            alpha={1}
+            mode="normal"
+            near={0.5 * gradient}
+            far={0.5}
+            origin={[0, 0, 0]}
+          />
+          <Depth
+            colorA="blue"
+            colorB="#f7b955"
+            alpha={1}
+            mode="add"
+            near={2 * gradient}
+            far={2}
+            origin={[1, 1, 1]}
+          />
+          <Depth
+            colorA="green"
+            colorB="#f7b955"
+            alpha={1}
+            mode="add"
+            near={3 * gradient}
+            far={3}
+            origin={[-1, -1, -1]}
+          />
+          <Depth
+            colorA="white"
+            colorB="red"
+            alpha={1}
+            mode="overlay"
+            near={1.5 * gradient}
+            far={1.5}
+            origin={[1, -1, -1]}
+          />
+          <Fresnel
+            mode="add"
+            color="white"
+            intensity={0.75}
+            power={2}
+            bias={0.05}
+          />
+        </LayerMaterial> */}
       </mesh>
 
       <pointLight position={[-1, 0, 0]} intensity={100} color={"white"} />

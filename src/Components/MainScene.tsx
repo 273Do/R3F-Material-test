@@ -6,15 +6,24 @@ import {
   Lightformer,
   OrbitControls,
 } from "@react-three/drei";
-import Texts from "./Texts";
-import { EffectComposer } from "@react-three/postprocessing";
 
 const MainScene = () => {
   return (
     <div className="w-screen h-screen">
-      <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
+      <Canvas
+        camera={{ position: [0, 0, 3], fov: 50 }}
+        gl={{
+          powerPreference: "high-performance",
+          antialias: false, // アンチエイリアスを無効化してパフォーマンス向上
+          stencil: false,
+          depth: true,
+          preserveDrawingBuffer: false,
+          failIfMajorPerformanceCaveat: false,
+        }}
+      >
         <Models />
-        <Texts />
+
+        {/* <Texts /> */}
         <Environment preset="night">
           <Lightformer
             intensity={3}
@@ -25,15 +34,14 @@ const MainScene = () => {
             onUpdate={(self) => self.lookAt(0, 0, 0)}
           />
         </Environment>
-        <AsciiRenderer
+        {/* <AsciiRenderer
           invert={false}
           resolution={0.1}
           fgColor="white"
           bgColor="transparent"
-        />
+        /> */}
         {/* <OrbitControls /> */}
-        {/* <EffectComposer>
-        </EffectComposer> */}
+        {/* <EffectComposer></EffectComposer> */}
       </Canvas>
     </div>
   );
