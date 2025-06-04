@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { LayerMaterial, Depth, Fresnel } from "lamina";
 
 export const Models = () => {
-  const { nodes } = useGLTF("./model/logo2.glb");
+  const { nodes } = useGLTF("./model/logo.glb");
 
   const { camera, mouse } = useThree(); // ビューポートの幅を取得
   const gradient = 0.5; // グラデーションの強さを調整する値
@@ -40,9 +40,10 @@ export const Models = () => {
           temporalDistortion={0.03}
         /> */}
         {/* <Edges linewidth={1} scale={1} threshold={10} color="white" /> */}
-        <meshStandardMaterial wireframe />
+        {/* <meshStandardMaterial wireframe /> */}
+        {/* <meshNormalMaterial /> */}
 
-        {/* <LayerMaterial toneMapped={false}>
+        {/* <LayerMaterial>
           <Depth
             colorA="#ff0080"
             colorB="black"
@@ -89,9 +90,9 @@ export const Models = () => {
         </LayerMaterial> */}
       </mesh>
 
-      <pointLight position={[-1, 0, 0]} intensity={100} color={"white"} />
+      {/* <pointLight position={[-1, 0, 0]} intensity={100} color={"white"} />
       <pointLight position={[1, 0, 0]} intensity={100} color={"white"} />
-      <directionalLight position={[0, 0, -1]} color="white" intensity={10} />
+      <directionalLight position={[0, 0, -1]} color="white" intensity={10} /> */}
     </>
   );
 };
